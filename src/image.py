@@ -56,5 +56,5 @@ if __name__ == '__main__':
     module = ["mpi","coco"]
     for i in module:
         for j in os.listdir("./input"):
-        	if j[-3:] in ['jpg','png','jpeg']:
+        	if j[-3:] in ['jpg','png','peg']:
         		proc(i, j)
