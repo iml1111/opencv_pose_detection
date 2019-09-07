@@ -2,19 +2,20 @@ import cv2
 import time
 import numpy as np
 import sys
+import os
 
 def proc(module, img):
     if module == "mpi":
-        protoFile = "./model/1.prototxt"
-        weightsFile = "./model/1.caffemodel"
+        protoFile = "./model/mpi.prototxt"
+        weightsFile = "./model/mpi.caffemodel"
         nPoints = 15
         POSE_PAIRS = [[0,1], [1,2], [2,3], [3,4], [1,5], [5,6], [6,7], [1,14], [14,8], [8,9], [9,10], [14,11], [11,12], [12,13]]
     else:
-        protoFile = "./model/2.prototxt"
-        weightsFile = "./model/2.caffemodel"
+        protoFile = "./model/coco.prototxt"
+        weightsFile = "./model/coco.caffemodel"
         nPoints = 18
         POSE_PAIRS = [[1,0],[1,2],[1,5],[2,3],[3,4],[5,6],[6,7],[1,8],[8,9],[9,10],[1,11],[11,12],[12,13],[0,14],[0,15],[14,16],[15,17]]
-    print("/input/" + img)
+    print("./input/" + img)
     frame = cv2.imread("./input/" + img)
     frameCopy = np.copy(frame)
     frameWidth = frame.shape[1]
@@ -53,8 +54,7 @@ def proc(module, img):
 
 if __name__ == '__main__':
     module = ["mpi","coco"]
-    input_list = ["test1.jpg","test2.jpg"]
     for i in module:
-        for j in range(1,17):
-            proc(i, "test" + str(j) + ".jpg")
-
+        for j in os.listdir("./input"):
+        	if j[-3:] in ['jpg','png','jpeg']:
+        		proc(i, j)
